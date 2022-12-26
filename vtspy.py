@@ -233,3 +233,34 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         print(response)
         return response
+
+    def execute_current_model_hotkey(self, hotkey_id: str, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "HotkeyTriggerRequest",
+            "data": {
+                "hotkeyID": hotkey_id
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def execute_live2d_item_hotkey(self, item_instance_id: str, hotkey_id: str, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "HotkeyTriggerRequest",
+            "data": {
+                "itemInstanceID": item_instance_id,
+                "hotkeyID": hotkey_id
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
