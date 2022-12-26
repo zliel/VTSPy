@@ -142,7 +142,8 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None, y_pos: float = None, rotation: float = None, size: float = None, request_id: str = ""):
+    def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
+                           y_pos: float = None, rotation: float = None, size: float = None, request_id: str = ""):
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
@@ -258,6 +259,39 @@ class VTSClient:
             "data": {
                 "itemInstanceID": item_instance_id,
                 "hotkeyID": hotkey_id
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_expression_state(self, give_details: bool = False, expression_file_name: str = "",
+                                 request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ExpressionStateRequest",
+            "data": {
+                "details": give_details,
+                "expressionFile": expression_file_name
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def activate_expression(self, expression_file_name: str, active: bool = True, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ExpressionActivationRequest",
+            "data": {
+                "expressionFile": expression_file_name,
+                "active": active
             }
         }
 
