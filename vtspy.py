@@ -298,3 +298,15 @@ class VTSClient:
         self.instance.send(json.dumps(payload))
         response = json.loads(self.instance.recv())
         return response
+
+    def request_art_mesh_list(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ArtMeshListRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
