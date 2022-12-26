@@ -91,4 +91,75 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
+    def request_folder_info(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "VTSFolderInfoRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_current_model(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "CurrentModelRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_available_models(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "AvailableModelsRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def load_model(self, model_id: str, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ModelLoadRequest",
+            "data": {
+                "modelID": model_id
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None, y_pos: float = None, rotation: float = None, size: float = None, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "MoveModelRequest",
+            "data": {
+                "timeInSeconds": time_in_seconds,
+                "valuesAreRelativeToModel": values_are_relative_to_model,
+                "positionX": x_pos,
+                "positionY": y_pos,
+                "rotation": rotation,
+                "size": size
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
 
