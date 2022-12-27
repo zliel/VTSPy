@@ -537,3 +537,88 @@ class VTSClient:
         self.instance.send(json.dumps(payload))
         response = json.loads(self.instance.recv())
         return response
+
+    def load_item(self, file_name: str,
+                  x_pos: float = 0, y_pos: float = 0, size: float = 1, rotation: float = 0,
+                  fade_time: float = 0, order: int = 0, fail_if_order_taken: bool = False,
+                  smoothing: float = 0, censored: bool = False, flipped: bool = False, locked: bool = False,
+                  unload_when_plugin_disconnects: bool = True, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ItemLoadRequest",
+            "data": {
+                "fileName": file_name,
+                "positionX": x_pos,
+                "positionY": y_pos,
+                "size": size,
+                "rotation": rotation,
+                "fadeTime": fade_time,
+                "order": order,
+                "failIfOrderTaken": fail_if_order_taken,
+                "smoothing": smoothing,
+                "censored": censored,
+                "flipped": flipped,
+                "locked": locked,
+                "unloadWhenPluginDisconnects": unload_when_plugin_disconnects
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def unload_all_items(self, request_id: str = ""):
+        """This method will unload all items from the scene, regardless of what plugin loaded them."""
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ItemUnloadRequest",
+            "data": {
+                "unloadAllInScene": True
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def unload_all_plugin_items(self, request_id: str = ""):
+        """This method will unload all items from the scene that were loaded by your plugin."""
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ItemUnloadRequest",
+            "data": {
+                "unloadAllInScene": False,
+                "unloadAllLoadedByThisPlugin": True
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def unload_items(self, allow_unloading_other_plugin_items: bool = True,
+                     item_ids=None, file_names=None, request_id: str = ""):
+        """This method will unload specific items from the scene."""
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ItemUnloadRequest",
+            "data": {
+                "unloadAllInScene": False,
+                "unloadAllLoadedByThisPlugin": False,
+                "allowUnloadingItemsLoadedByUserOrOtherPlugins": allow_unloading_other_plugin_items,
+                "instanceIDs": item_ids,
+                "fileNames": file_names
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
