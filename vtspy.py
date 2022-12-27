@@ -356,3 +356,114 @@ class VTSClient:
         self.instance.send(json.dumps(payload))
         response = json.loads(self.instance.recv())
         return response
+
+    def request_is_face_found(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "FaceFoundRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_input_parameters(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "InputParameterListRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_parameter_value(self, parameter_name: str, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ParameterValueRequest",
+            "data": {
+                "name": parameter_name
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_all_parameter_values(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "Live2DParameterListRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def add_new_parameter(self, parameter_name: str, parameter_description: str, min_value: int, max_value: int,
+                          default_value: int, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ParameterCreationRequest",
+            "data": {
+                "parameterName": parameter_name,
+                "explanation": parameter_description,
+                "min": min_value,
+                "max": max_value,
+                "defaultValue": default_value
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def delete_parameter(self, parameter_name: str, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ParameterDeletionRequest",
+            "data": {
+                "parameterName": parameter_name
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def set_parameter_value(self, mode: str = "add", consider_face_found: bool = False, parameter_values = None, request_id: str = ""):
+        """This method will set the parameter values of the model. The mode parameter can be either "add" or "set" otherwise it will raise a ValueError,
+        and the parameter_values parameter should be a list of dictionaries, each containing the id of the parameter,
+        the value to set it to, and an optional "weight" value.
+        If consider_face_found is True, VTube Studio will consider the face found, allowing you to control when the
+        "tracking lost" animation is played."""
+        if mode not in ["add", "set"]:
+            raise ValueError("The mode parameter must be either 'add' or 'set'.")
+
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "InjectParameterDataRequest",
+            "data": {
+                "mode": mode,
+                "faceFound": consider_face_found,
+                "parameterValues": parameter_values
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
