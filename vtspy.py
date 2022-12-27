@@ -443,7 +443,8 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def set_parameter_value(self, mode: str = "add", consider_face_found: bool = False, parameter_values = None, request_id: str = ""):
+    def set_parameter_value(self, mode: str = "add", consider_face_found: bool = False, parameter_values=None,
+                            request_id: str = ""):
         """This method will set the parameter values of the model. The mode parameter can be either "add" or "set" otherwise it will raise a ValueError,
         and the parameter_values parameter should be a list of dictionaries, each containing the id of the parameter,
         the value to set it to, and an optional "weight" value.
@@ -461,6 +462,39 @@ class VTSClient:
                 "mode": mode,
                 "faceFound": consider_face_found,
                 "parameterValues": parameter_values
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def get_current_model_physics(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "GetCurrentModelPhysicsRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def set_current_model_physics(self, strength_overrides=None, wind_overrides=None, request_id: str = ""):
+        """This method will set the physics overrides of the model.
+        The strength_overrides and wind_overrides parameter should be a list of dictionaries,
+        each containing the id of the physics, the strength float to set it to,
+        a boolean for whether to set value as the base value for physics strength or wind.
+        If setBaseValue is true, the id should be omitted."""
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "SetCurrentModelPhysicsRequest",
+            "data": {
+                "strengthOverrides": strength_overrides,
+                "windOverrides": wind_overrides
             }
         }
 
