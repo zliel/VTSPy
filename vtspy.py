@@ -501,3 +501,39 @@ class VTSClient:
         self.instance.send(json.dumps(payload))
         response = json.loads(self.instance.recv())
         return response
+
+    def get_NDI_config(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "NDIConfigRequest",
+            "data": {
+                "setNewConfig": False
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def set_NDI_config(self, ndi_active: bool, use_ndi_5: bool, use_custom_resolution: bool, custom_width_ndi: int,
+                       custom_height_ndi: int, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "NDIConfigRequest",
+            "data": {
+                "setNewConfig": True,
+                "ndiActive": ndi_active,
+                "useNDI5": use_ndi_5,
+                "useCustomResolution": use_custom_resolution,
+                "customWidthNDI": custom_width_ndi,
+                "customHeightNDI": custom_height_ndi
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
