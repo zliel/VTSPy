@@ -1,8 +1,6 @@
 from websocket import create_connection
 import json
 
-testing_id = "TestingTesting123"
-
 
 class VTSClient:
     def __init__(self, plugin_name: str, plugin_developer: str, plugin_logo: str = "", request_id: str = ""):
@@ -305,6 +303,54 @@ class VTSClient:
             "apiVersion": "1.0",
             "requestID": request_id,
             "messageType": "ArtMeshListRequest"
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def tint_art_mesh(self,
+                      color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = 255,
+                      mix_with_scene_lighting_color: float = 1,
+                      tint_all_meshes: bool = False, art_mesh_number=None, exact_name=None, name_contains=None,
+                      exact_tag=None, tag_contains=None, request_id: str = ""):
+        """This method will tint the art mesh(es) specified by the parameters. Be careful with the RGBA values, as they should remain between 0 and 255, and if any aren't included, the RGB parameters default to 0 and A defaults to 255.
+        If you want to tint all meshes, pass in tint_all_meshes=True. If you want to tint specific meshes, pass in the art_mesh_number, exact_name, name_contains, exact_tag, or tag_contains parameters."""
+
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ColorTintRequest",
+            "data": {
+                "colorTint": {
+                    "colorR": color_r,
+                    "colorG": color_g,
+                    "colorB": color_b,
+                    "colorA": color_a,
+                    "mixWithSceneLightingColor": mix_with_scene_lighting_color
+                },
+                "artMeshMatcher": {
+                    "tintAll": tint_all_meshes,
+                    "artMeshNumber": art_mesh_number,
+                    "nameExact": exact_name,
+                    "nameContains": name_contains,
+                    "tagExact": exact_tag,
+                    "tagContains": tag_contains
+                }
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_scene_color_overlay_info(self, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "SceneColorOverlayInfoRequest"
         }
 
         self.instance.send(json.dumps(payload))
