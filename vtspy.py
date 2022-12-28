@@ -1,5 +1,7 @@
 from websocket import create_connection
 import json
+import threading
+import time
 
 
 class VTSClient:
@@ -10,6 +12,9 @@ class VTSClient:
         self.plugin_logo = plugin_logo
         self.request_id = request_id
         self.auth_token = self.get_token(plugin_name, plugin_developer, plugin_logo, request_id)
+        self.subscriptions = {"TestEvent": False, "ModelLoadedEvent": False, "TrackingStatusChangedEvent": False,
+                              "BackgroundChangedEvent": False, "ModelConfigChangedEvent": False,
+                              "ModelMovedEvent": False, "ModelOutlineEvent": False}
 
     def get_token(self, plugin_name: str, plugin_developer: str, plugin_logo: str = "", request_id: str = ""):
         payload = {
@@ -688,4 +693,67 @@ class VTSClient:
 
         self.instance.send(json.dumps(payload))
         response = json.loads(self.instance.recv())
+        return response
+
+    def subscribe_to_event(self, event_name: str, on_message: callable, config: dict = None,
+                           request_id: str = ""):
+        """This method will subscribe to a specific event and call the on_message function when the event is triggered in VtubeStudio."""
+        if config is None:
+            config = {}
+
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "EventSubscriptionRequest",
+            "data": {
+                "eventName": event_name,
+                "subscribe": True,
+                "config": config
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+
+        response = json.loads(self.instance.recv())
+        if response["messageType"] == "APIError":
+            return response, None
+
+        # Using the self.subscriptions dictionary to store the events the plugin is subscribed to
+        self.subscriptions[event_name] = True
+
+        # Upon subscribing to an event, the self.subscriptions dictionary will be updated and a thread will be started to listen for messages
+        def listener():
+            while self.subscriptions[event_name] is True:
+                message = self.instance.recv()
+                on_message(json.loads(message))
+
+                # With the larger sleep time of 1 second, the "ModelOutlineEvent" would send too many messages, and the connection would be closed, so I changed it to 0.05 seconds
+                if event_name != "ModelOutlineEvent":
+                    time.sleep(1)
+                else:
+                    time.sleep(0.05)
+
+        thread = threading.Thread(target=listener)
+        thread.start()
+        return response
+
+    def unsubscribe_from_event(self, event_name: str, request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "EventSubscriptionRequest",
+            "data": {
+                "eventName": event_name,
+                "subscribe": False
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        if response["messageType"] == "APIError":
+            return response
+
+        self.subscriptions[event_name] = False
         return response
