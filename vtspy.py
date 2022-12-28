@@ -622,3 +622,70 @@ class VTSClient:
         self.instance.send(json.dumps(payload))
         response = json.loads(self.instance.recv())
         return response
+
+    def control_item_animation(self, item_instance_id: str, framerate: int = -1, frame: int = -1,
+                               brightness: float = -1, opacity: float = -1,
+                               set_auto_stop_frames: bool = False, auto_stop_frames=None,
+                               set_animation_play_state: bool = True, animation_play_state: bool = True,
+                               request_id: str = ""):
+
+        if auto_stop_frames is None:
+            auto_stop_frames = []
+
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ItemAnimationControlRequest",
+            "data": {
+                "itemInstanceID": item_instance_id,
+                "framerate": framerate,
+                "frame": frame,
+                "brightness": brightness,
+                "opacity": opacity,
+                "setAutoStopFrames": set_auto_stop_frames,
+                "autoStopFrames": auto_stop_frames,
+                "setAnimationPlayState": set_animation_play_state,
+                "animationPlayState": animation_play_state
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def move_item(self, items_to_move: list = None, request_id: str = ""):
+        # TODO: Consider using an item_movement class and pass in a list of those instead of a list of dictionaries
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ItemMoveRequest",
+            "data": {
+                "itemsToMove": items_to_move
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
+
+    def request_art_mesh_selection(self, description: str = "", help_text: str = "",
+                                   number_of_meshes_to_select: int = 1, active_meshes: list = None,
+                                   request_id: str = ""):
+        payload = {
+            "apiName": "VTubeStudioPublicAPI",
+            "apiVersion": "1.0",
+            "requestID": request_id,
+            "messageType": "ArtMeshSelectionRequest",
+            "data": {
+                "textOverride": description,
+                "helpOverride": help_text,
+                "requestedArtMeshCount": number_of_meshes_to_select,
+                "activeArtMeshes": active_meshes
+            }
+        }
+
+        self.instance.send(json.dumps(payload))
+        response = json.loads(self.instance.recv())
+        return response
