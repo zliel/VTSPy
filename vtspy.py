@@ -20,6 +20,11 @@ class VTSClient:
         client.subscribe_to_event("TestEvent", on_message=print)
         time.sleep(10)
         client.unsubscribe_from_event("TestEvent")
+
+    Warning:
+        Be aware that the token is stored in a file called "token" in the same directory as the script, and
+        will be used for authentication in future sessions. If you want to change the plugin information, you will have to
+        delete the file.
     """
     def __init__(self, plugin_name: str, plugin_developer: str, plugin_logo: str = ""):
         """
@@ -33,7 +38,7 @@ class VTSClient:
         self.plugin_name = plugin_name
         self.plugin_developer = plugin_developer
         self.plugin_logo = plugin_logo
-        self.auth_token = self.get_token(f"{plugin_name}-tokenRequest")
+        self.auth_token = self.get_token(f"TokenRequest")
         self.subscriptions = {"TestEvent": False, "ModelLoadedEvent": False, "TrackingStatusChangedEvent": False,
                               "BackgroundChangedEvent": False, "ModelConfigChangedEvent": False,
                               "ModelMovedEvent": False, "ModelOutlineEvent": False}
