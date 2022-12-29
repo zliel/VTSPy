@@ -6,13 +6,34 @@ import time
 
 # noinspection GrazieInspection
 class VTSClient:
-    def __init__(self, plugin_name: str, plugin_developer: str, plugin_logo: str = "", request_id: str = ""):
+    """
+    A client for interacting with the VTubeStudio API.
+
+    This class provides a convenient interface for sending requests to the and
+    handling responses from the API. It also provides a simple way to subscribe to events
+    and handle them in a separate thread. For more in-depth information about the API, see the
+    official documentation at https://github.com/DenchiSoft/VTubeStudio
+
+    Example:
+        client = VTSClient("MyPlugin", "MyName", "iVBORw0.........KGgoA=")
+        client.authenticate("my-auth-request-id")
+        client.subscribe_to_event("TestEvent", on_message=print)
+        time.sleep(10)
+        client.unsubscribe_from_event("TestEvent")
+    """
+    def __init__(self, plugin_name: str, plugin_developer: str, plugin_logo: str = ""):
+        """
+        Initialize a new VTSClient instance.
+
+        :param plugin_name: The name of the plugin.
+        :param plugin_developer: The name of the developer of the plugin.
+        :param plugin_logo: The base64-encoded logo of the plugin. This will be displayed in VTubeStudio's plugin list.
+        """
         self.instance = create_connection("ws://localhost:8001")
         self.plugin_name = plugin_name
         self.plugin_developer = plugin_developer
         self.plugin_logo = plugin_logo
-        self.request_id = request_id
-        self.auth_token = self.get_token(plugin_name, plugin_developer, plugin_logo, request_id)
+        self.auth_token = self.get_token(f"{plugin_name}-tokenRequest")
         self.subscriptions = {"TestEvent": False, "ModelLoadedEvent": False, "TrackingStatusChangedEvent": False,
                               "BackgroundChangedEvent": False, "ModelConfigChangedEvent": False,
                               "ModelMovedEvent": False, "ModelOutlineEvent": False}
