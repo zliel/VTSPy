@@ -66,16 +66,18 @@ class VTSClient:
         return response
 
     # make an AuthenticationRequest to the websocket
-    def authenticate(self, plugin_name: str, plugin_developer: str, token: str, request_id: str = ""):
+    def authenticate(self, request_id: str = ""):
+
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
             "requestID": request_id,
             "messageType": "AuthenticationRequest",
             "data": {
-                "pluginName": plugin_name,
-                "pluginDeveloper": plugin_developer,
-                "authenticationToken": token
+                "pluginName": self.plugin_name,
+                "pluginDeveloper": self.plugin_developer,
+                "pluginLogo": self.plugin_logo,
+                "authenticationToken": self.auth_token
             }
         }
 
