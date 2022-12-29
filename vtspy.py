@@ -88,7 +88,7 @@ class VTSClient:
         else:
             return response
 
-    def get_api_state(self, request_id: str = ""):
+    def get_api_state(self, request_id: str = "") -> dict:
         """
         This method will return the current state of the VTubeStudio session.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#api-details
@@ -110,7 +110,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def authenticate(self, request_id: str = ""):
+    def authenticate(self, request_id: str = "") -> dict:
         """
         This method will authenticate the plugin with VTubeStudio.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#authentication
@@ -138,7 +138,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_stats(self, request_id: str = ""):
+    def request_stats(self, request_id: str = "") -> dict:
         """
         This method will return statistics about the current VTubeStudio session (things like uptime, framerate, number of plugins, resolution, etc.).
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-current-vts-statistics
@@ -159,7 +159,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_folder_info(self, request_id: str = ""):
+    def request_folder_info(self, request_id: str = "") -> dict:
         """
         This method will return the names of the folders in the VTubeStudio "StreamingAssets" folder.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-list-of-vts-folders
@@ -180,7 +180,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_current_model(self, request_id: str = ""):
+    def request_current_model(self, request_id: str = "") -> dict:
         """
         This method will return information about the current model from VTubeStudio.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-the-currently-loaded-model
@@ -201,7 +201,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_available_models(self, request_id: str = ""):
+    def request_available_models(self, request_id: str = "") -> dict:
         """
         This method will return a list of all available models from VTubeStudio.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-a-list-of-available-vts-models
@@ -222,7 +222,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def load_model(self, model_id: str, request_id: str = ""):
+    def load_model(self, model_id: str, request_id: str = "") -> dict:
         """
         This method will load a model into VTubeStudio. This has a 2 second global cooldown.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#loading-a-vts-model-by-its-id
@@ -248,7 +248,7 @@ class VTSClient:
         return response
 
     def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
-                           y_pos: float = None, rotation: float = None, size: float = None, request_id: str = ""):
+                           y_pos: float = None, rotation: float = None, size: float = None, request_id: str = "") -> dict:
         """This method will move, rotate and/or resize the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#moving-the-currently-loaded-vts-model
 
@@ -282,7 +282,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_current_model_hotkeys(self, request_id: str = ""):
+    def request_current_model_hotkeys(self, request_id: str = "") -> dict:
         """
         This method will return the current model's hotkeys
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-hotkeys-available-in-current-or-other-vts-model
@@ -303,7 +303,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_model_hotkeys_by_id(self, model_id: str, request_id: str = ""):
+    def request_model_hotkeys_by_id(self, model_id: str, request_id: str = "") -> dict:
         """
         This method will return the hotkeys of the model with the given modelID.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-hotkeys-available-in-current-or-other-vts-model
@@ -354,7 +354,7 @@ class VTSClient:
                            include_available_item_files: bool = False,
                            only_items_with_file_name: str = "",
                            only_items_with_instance_id: str = "",
-                           request_id: str = ""):
+                           request_id: str = "") -> dict:
         """
         This method will return a list of items, depending on the parameters set.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-available-items-or-items-in-scene
@@ -387,7 +387,7 @@ class VTSClient:
         print(response)
         return response
 
-    def execute_current_model_hotkey(self, hotkey_id: str, request_id: str = ""):
+    def execute_current_model_hotkey(self, hotkey_id: str, request_id: str = "") -> dict:
         """This method will execute the hotkey with the given ID in the currently loaded model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-execution-of-hotkeys
 
@@ -411,7 +411,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def execute_live2d_item_hotkey(self, item_instance_id: str, hotkey_id: str, request_id: str = ""):
+    def execute_live2d_item_hotkey(self, item_instance_id: str, hotkey_id: str, request_id: str = "") -> dict:
         """This method will execute the hotkey of a Live2D item with the given ID.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-execution-of-hotkeys
 
@@ -438,7 +438,7 @@ class VTSClient:
         return response
 
     def request_expression_state(self, give_details: bool = False, expression_file_name: str = "",
-                                 request_id: str = ""):
+                                 request_id: str = "") -> dict:
         """This method will return either the current state of a specified expression or the current state of all expressions.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-current-expression-state-list
 
@@ -464,7 +464,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def activate_expression(self, expression_file_name: str, active: bool = True, request_id: str = ""):
+    def activate_expression(self, expression_file_name: str, active: bool = True, request_id: str = "") -> dict:
         """
         This method will activate or deactivate an expression. If the expression is already active or inactive, nothing will happen.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-activation-or-deactivation-of-expressions
@@ -491,7 +491,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_art_mesh_list(self, request_id: str = ""):
+    def request_art_mesh_list(self, request_id: str = "") -> dict:
         """
         This method will return a list of all art meshes in the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-artmeshes-in-current-model
@@ -516,7 +516,7 @@ class VTSClient:
                       color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = None,
                       mix_with_scene_lighting_color: float = None,
                       tint_all_meshes: bool = False, art_mesh_number: list[int] = None, exact_name: list[str] = None,
-                      name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None, request_id: str = ""):
+                      name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None, request_id: str = "") -> dict:
         """This method will tint the art mesh(es) specified by the parameters.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#tint-artmeshes-with-color
 
@@ -565,7 +565,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_scene_color_overlay_info(self, request_id: str = ""):
+    def request_scene_color_overlay_info(self, request_id: str = "") -> dict:
         """This method will return information about the scene lighting overlay color, which overlays the user's model with
         the average color captured from a screen or window. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-scene-lighting-overlay-color
 
@@ -585,7 +585,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_is_face_found(self, request_id: str = ""):
+    def request_is_face_found(self, request_id: str = "") -> dict:
         """This method will return a boolean value indicating whether or not the face is currently being tracked.
         More information on the face tracking system can be found here: https://github.com/DenchiSoft/VTubeStudio#checking-if-face-is-currently-found-by-tracker
 
@@ -605,7 +605,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_input_parameters(self, request_id: str = ""):
+    def request_input_parameters(self, request_id: str = "") -> dict:
         """
         This method will return lists of all input parameters that are currently available in VTubeStudio, both custom and default.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-available-tracking-parameters
@@ -627,7 +627,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_parameter_value(self, parameter_name: str, request_id: str = ""):
+    def request_parameter_value(self, parameter_name: str, request_id: str = "") -> dict:
         """
         This method retrieves the value of a specific default or custom parameter.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-the-value-for-one-specific-parameter-default-or-custom.
@@ -653,7 +653,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def request_all_parameter_values(self, request_id: str = ""):
+    def request_all_parameter_values(self, request_id: str = "") -> dict:
         """
         This method retrieves all Live2D parameter values for the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-the-value-for-all-live2d-parameters-in-the-current-model
@@ -675,7 +675,7 @@ class VTSClient:
         return response
 
     def add_new_parameter(self, parameter_name: str, parameter_description: str, min_value: int, max_value: int,
-                          default_value: int, request_id: str = ""):
+                          default_value: int, request_id: str = "") -> dict:
         """
         This method will add a custom parameter to the model. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#adding-new-tracking-parameters-custom-parameters.
 
@@ -707,7 +707,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def delete_parameter(self, parameter_name: str, request_id: str = ""):
+    def delete_parameter(self, parameter_name: str, request_id: str = "") -> dict:
         """
         This method will delete a custom parameter from the model. Note that default parameters cannot be deleted.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#delete-custom-parameters
@@ -733,7 +733,7 @@ class VTSClient:
         return response
 
     def set_parameter_value(self, mode: str = "add", consider_face_found: bool = False, parameter_values=None,
-                            request_id: str = ""):
+                            request_id: str = "") -> dict:
         """
         This method will set the parameter values of the model. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#feeding-in-data-for-default-or-custom-parameters.
 
@@ -764,7 +764,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def get_current_model_physics(self, request_id: str = ""):
+    def get_current_model_physics(self, request_id: str = "") -> dict:
         """
         This method will return the current physics settings of the model More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-physics-settings-of-currently-loaded-vts-model.
 
@@ -784,7 +784,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def set_current_model_physics(self, strength_overrides=None, wind_overrides=None, request_id: str = ""):
+    def set_current_model_physics(self, strength_overrides=None, wind_overrides=None, request_id: str = "") -> dict:
         """
         This method will set the override the physics configuration of the model. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#overriding-physics-settings-of-currently-loaded-vts-model
 
@@ -810,7 +810,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def get_NDI_config(self, request_id: str = ""):
+    def get_NDI_config(self, request_id: str = "") -> dict:
         """This method will return the current NDI configuration. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-and-set-ndi-settings
 
         :param request_id: A unique ID to identify this request. If left blank, a random ID will be generated by VTubeStudio.
@@ -833,7 +833,7 @@ class VTSClient:
         return response
 
     def set_NDI_config(self, ndi_active: bool, use_ndi_5: bool, use_custom_resolution: bool, custom_width_ndi: int = -1,
-                       custom_height_ndi: int = -1, request_id: str = ""):
+                       custom_height_ndi: int = -1, request_id: str = "") -> dict:
         """This method will set the NDI configuration. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-and-set-ndi-settings
 
         :param ndi_active: Whether to enable NDI.
@@ -916,7 +916,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def unload_all_items(self, request_id: str = ""):
+    def unload_all_items(self, request_id: str = "") -> dict:
         """
         This method will unload all items from the scene, regardless of what plugin loaded them.
 
@@ -939,7 +939,7 @@ class VTSClient:
         response = json.loads(self.instance.recv())
         return response
 
-    def unload_all_plugin_items(self, request_id: str = ""):
+    def unload_all_plugin_items(self, request_id: str = "") -> dict:
         """
         This method will unload all items from the scene that were loaded by your plugin. Note that this will not unload items loaded by other plugins.
 
@@ -964,7 +964,7 @@ class VTSClient:
         return response
 
     def unload_items(self, allow_unloading_other_plugin_items: bool = True,
-                     item_ids: list[str] = None, file_names: list[str] = None, request_id: str = ""):
+                     item_ids: list[str] = None, file_names: list[str] = None, request_id: str = "") -> dict:
         """
         This method will unload specific items from the scene.
 
