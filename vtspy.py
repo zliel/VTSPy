@@ -513,7 +513,7 @@ class VTSClient:
         return response
 
     def tint_art_mesh(self,
-                      color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = None,
+                      color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = None, rainbow: bool = False,
                       mix_with_scene_lighting_color: float = None,
                       tint_all_meshes: bool = False, art_mesh_number: list[int] = None, exact_name: list[str] = None,
                       name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None, request_id: str = "") -> dict:
@@ -524,6 +524,7 @@ class VTSClient:
         :param color_g: The green value of the color to tint the art mesh(es) with. Should be between 0 and 255.
         :param color_b: The blue value of the color to tint the art mesh(es) with. Should be between 0 and 255.
         :param color_a: The alpha value of the color to tint the art mesh(es) with. Should be between 0 and 255.
+        :param rainbow: Whether the art mesh(es) should be tinted with a rainbow color. Note that this will override the color parameters.
         :param mix_with_scene_lighting_color: The amount to mix the color with the scene lighting color. Should be between 0 and 1.
         :param tint_all_meshes: Whether or not to tint all art meshes. If this is True, the next parameters will be ignored.
         :param art_mesh_number: A list of integers that selects meshes based on their order in the model.
@@ -548,7 +549,8 @@ class VTSClient:
                     "colorG": color_g,
                     "colorB": color_b,
                     "colorA": color_a,
-                    "mixWithSceneLightingColor": mix_with_scene_lighting_color
+                    "mixWithSceneLightingColor": mix_with_scene_lighting_color,
+                    "jeb_": rainbow
                 },
                 "artMeshMatcher": {
                     "tintAll": tint_all_meshes,
