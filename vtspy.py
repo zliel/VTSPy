@@ -54,7 +54,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain the authentication token.
         :raises APIError: If the token file cannot be found and the plugin isn't allowed by the user.
         """
@@ -102,7 +101,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain whether the API is enabled, the VTubeStudio version, and whether the plugin is
         authenticated for the current session.
         :raises APIError: If VTubeStudio is not running.
@@ -126,7 +124,6 @@ class VTSClient:
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#authentication
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain the authentication token if it's the first time the plugin has been authenticated, or
         a boolean value indicating the plugin has been authenticated.
@@ -158,7 +155,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain a dictionary of the statistics.
         :raises APIError: If the plugin is not authenticated.
         """
@@ -181,7 +177,6 @@ class VTSClient:
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-list-of-vts-folders
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain a dictionary of the folder types and names.
         :raises APIError: If the plugin is not authenticated.
@@ -206,7 +201,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain information about the current model.
         :raises APIError: If the plugin is not authenticated.
         """
@@ -229,7 +223,6 @@ class VTSClient:
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-a-list-of-available-vts-models
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain a list of all available models.
         :raises APIError: If the plugin is not authenticated.
@@ -255,7 +248,6 @@ class VTSClient:
         :param model_id: The ID of the model to load.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain the ID of the model that was loaded.
         :raises APIError: If the plugin is not authenticated or if the model ID is invalid.
         """
@@ -278,7 +270,8 @@ class VTSClient:
     def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
                            y_pos: float = None, rotation: float = None, size: float = None,
                            request_id: str = "") -> dict:
-        """This method will move, rotate and/or resize the current model.
+        """
+        This method will move, rotate and/or resize the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#moving-the-currently-loaded-vts-model
 
         :param time_in_seconds: The time in seconds the movement should take. Values must be between 0 and 2.
@@ -288,7 +281,6 @@ class VTSClient:
         :param rotation: The rotation of the model. Values must be between -360 and 360.
         :param size: The size of the model. Values must be between -100 and 100.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio. Note that this response won't contain anything in the "data" field.
         :raises APIError: If the plugin is not authenticated, if no model is loaded, if the model is unable to move (such as while in a config window), or if the values are invalid.
@@ -321,7 +313,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain the list of hotkeys.
         :raises APIError: If the plugin is not authenticated.
         """
@@ -345,7 +336,6 @@ class VTSClient:
 
         :param model_id: The modelID of the model
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain the list of hotkeys.
         :raises APIError: If the plugin is not authenticated, or if the model ID is invalid/no model with that ID is found.
@@ -404,7 +394,6 @@ class VTSClient:
         :param only_items_with_instance_id: If set, the list will only include the item that has the specified instance ID.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain the list of items.
         :raises APIError: If the plugin is not authenticated.
         """
@@ -428,14 +417,14 @@ class VTSClient:
         return response
 
     def execute_current_model_hotkey(self, hotkey_id: str, request_id: str = "") -> dict:
-        """This method will execute the hotkey with the given ID in the currently loaded model.
+        """
+        This method will execute the hotkey with the given ID in the currently loaded model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-execution-of-hotkeys
 
         WARNING: This method will cause a permanent loop if there is no model loaded.
 
         :param hotkey_id: The ID of the hotkey to execute.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain the ID of the hotkey that was executed.
         :raises APIError: If the plugin is not authenticated, or if the hotkey ID is invalid/no hotkey with that ID is found.
@@ -457,13 +446,13 @@ class VTSClient:
         return response
 
     def execute_live2d_item_hotkey(self, item_instance_id: str, hotkey_id: str, request_id: str = "") -> dict:
-        """This method will execute the hotkey of a Live2D item with the given ID.
+        """
+        This method will execute the hotkey of a Live2D item with the given ID.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-execution-of-hotkeys
 
         :param item_instance_id: The ID of the Live2D item instance.
         :param hotkey_id: The ID of the hotkey to execute.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain the ID of the hotkey that was executed.
         :raises APIError: If the plugin is not authenticated, if no Live2D item with the given instance ID is loaded, or if the hotkey ID is invalid/no hotkey with that ID is found.
@@ -487,13 +476,13 @@ class VTSClient:
 
     def request_expression_state(self, give_details: bool = False, expression_file_name: str = "",
                                  request_id: str = "") -> dict:
-        """This method will return either the current state of a specified expression or the current state of all expressions.
+        """
+        This method will return either the current state of a specified expression or the current state of all expressions.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-current-expression-state-list
 
         :param give_details: If set to true, the response will contain arrays of hotkeys and parameters the expression is used in.
         :param expression_file_name: The file name of the expression to get the state of. If this is empty, the state of all expressions will be returned.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain information about the model and the state of its expression(s).
         :raises APIError: If the plugin is not authenticated, or if the expression file name is invalid/no expression with that file name is found.
@@ -524,7 +513,6 @@ class VTSClient:
         :param active: Whether the expression should be activated or deactivated.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio. Note that this response won't contain anything in the "data" field.
         :raises APIError: If the plugin is not authenticated, or if the expression file name is invalid/no expression with that file name is found.
         """
@@ -552,7 +540,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain lists of the art mesh names and tags.
         :raises APIError: If the plugin is not authenticated.
         """
@@ -577,7 +564,8 @@ class VTSClient:
                       tint_all_meshes: bool = False, art_mesh_number: list[int] = None, exact_name: list[str] = None,
                       name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None,
                       request_id: str = "") -> dict:
-        """This method will tint the art mesh(es) specified by the parameters.
+        """
+        This method will tint the art mesh(es) specified by the parameters.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#tint-artmeshes-with-color
 
         :param color_r: The red value of the color to tint the art mesh(es) with. Should be between 0 and 255.
@@ -593,7 +581,6 @@ class VTSClient:
         :param exact_tag: A list of tags to search for. If the art mesh(es) have all of these tags, they will be tinted.
         :param tag_contains: A list of tags to tint the art mesh(es) with, if the tag contains the contained string.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain the number of art meshes matched/tinted.
         :raises APIError: If the plugin is not authenticated, if no model is currently loaded, or if the parameters are invalid.
@@ -631,11 +618,11 @@ class VTSClient:
         return response
 
     def request_scene_color_overlay_info(self, request_id: str = "") -> dict:
-        """This method will return information about the scene lighting overlay color, which overlays the user's model with
+        """
+        This method will return information about the scene lighting overlay color, which overlays the user's model with
         the average color captured from a screen or window. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-scene-lighting-overlay-color
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain information regarding the scene lighting overlay color. Check the documentation for more specifics.
         :raises APIError: If the plugin is not authenticated.
@@ -654,11 +641,11 @@ class VTSClient:
         return response
 
     def request_is_face_found(self, request_id: str = "") -> dict:
-        """This method will return a boolean value indicating whether or not the face is currently being tracked.
+        """
+        This method will return a boolean value indicating whether or not the face is currently being tracked.
         More information on the face tracking system can be found here: https://github.com/DenchiSoft/VTubeStudio#checking-if-face-is-currently-found-by-tracker
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain a "found" boolean value.
         :raises APIError: If the plugin is not authenticated.
@@ -681,9 +668,7 @@ class VTSClient:
         This method will return lists of all input parameters that are currently available in VTubeStudio, both custom and default.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-available-tracking-parameters
 
-
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain a list of custom parameters and a list of default parameters.
         :raises APIError: If the plugin is not authenticated.
@@ -706,10 +691,8 @@ class VTSClient:
         This method retrieves the value of a specific default or custom parameter.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-the-value-for-one-specific-parameter-default-or-custom.
 
-
         :param parameter_name: The name of the parameter to retrieve the value of.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain information about the parameter.
         :raises APIError: If the plugin is not authenticated or if the requested parameter does not exist.
@@ -736,7 +719,6 @@ class VTSClient:
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-the-value-for-all-live2d-parameters-in-the-current-model
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain a list of all parameter values.
         :raises APIError: If the plugin is not authenticated.
@@ -765,7 +747,6 @@ class VTSClient:
         :param max_value: The maximum value the parameter can be set to. Valid values are between -1000000 and 1000000.
         :param default_value: The default value the parameter will be set to when the model is loaded. Valid values are between -1000000 and 1000000.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio, whose "data" object will contain the name of the parameter that was created.
         :raises APIError: If the plugin is not authenticated, if any of input values are invalid, if the parameter name is already in use or if there are too many parameters already (300 global and 100 per plugin maximum).
@@ -798,7 +779,6 @@ class VTSClient:
         :param parameter_name: The name of the parameter to delete.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio, whose "data" object will contain the name of the parameter that was deleted.
         :raises APIError: If the plugin is not authenticated, if the parameter does not exist, or if the parameter was not added by the plugin.
         """
@@ -827,7 +807,6 @@ class VTSClient:
         :param consider_face_found: Whether or not to consider the face found. If True, VTube Studio will consider the face found, allowing you to control when the "tracking lost" animation is played.
         :param parameter_values: A list of dictionaries, each containing the id of the parameter, the value to set it to, and an optional "weight" value.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio. Note that this response won't contain anything in the "data" field.
         :raises APIError: If the plugin is not authenticated, if the mode or parameter values are invalid, or if the parameter does not exist.
@@ -859,7 +838,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio whose "data" object will contain the user's NDI configuration properties.
         :raises APIError: If the plugin is not authenticated.
         """
@@ -878,12 +856,12 @@ class VTSClient:
 
     def set_current_model_physics(self, strength_overrides=None, wind_overrides=None, request_id: str = "") -> dict:
         """
-        This method will set the override the physics configuration of the model. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#overriding-physics-settings-of-currently-loaded-vts-model
+        This method will set the override the physics configuration of the model.
+        More information can be found here: https://github.com/DenchiSoft/VTubeStudio#overriding-physics-settings-of-currently-loaded-vts-model
 
         :param strength_overrides: A list of dictionaries containing the id of the physics, the strength float to set it to, the length of time to override the physics for, and a boolean for whether to set value as the base value for physics strength.
         :param wind_overrides: A list of dictionaries containing the id of the physics, the wind float to set it to, the length of time to override the physics for,, and a boolean for whether to set value as the base value for wind physics.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio. Note that this response won't contain anything in the "data" field.
         :raises APIError: If the plugin is not authenticated, if the strength or wind overrides are invalid, if another plugin is already overriding the physics, or if no model is loaded.
@@ -906,10 +884,10 @@ class VTSClient:
         return response
 
     def get_NDI_config(self, request_id: str = "") -> dict:
-        """This method will return the current NDI configuration. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-and-set-ndi-settings
+        """
+        This method will return the current NDI configuration. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-and-set-ndi-settings
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio whose "data" object will contain the user's NDI configuration properties.
         :raises APIError: If the plugin is not authenticated, or if this method is called within 3 seconds of a different call to the "NDIConfigRequest" endpoint.
@@ -932,7 +910,9 @@ class VTSClient:
 
     def set_NDI_config(self, ndi_active: bool, use_ndi_5: bool, use_custom_resolution: bool, custom_width_ndi: int = -1,
                        custom_height_ndi: int = -1, request_id: str = "") -> dict:
-        """This method will set the NDI configuration. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-and-set-ndi-settings
+        """
+        This method will set the NDI configuration.
+        More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-and-set-ndi-settings
 
         :param ndi_active: Whether to enable NDI.
         :param use_ndi_5: Whether to use NDI 5.0. If ndi_active is True, this will enable NDI 5.0.
@@ -940,7 +920,6 @@ class VTSClient:
         :param custom_width_ndi: The width of the NDI stream. If ndi_active is True and use_custom_resolution is True, the width of the NDI stream will be set to this value. If left empty, this will be ignored.
         :param custom_height_ndi: The height of the NDI stream. If ndi_active is True and use_custom_resolution is True, the height of the NDI stream will be set to this value. If left empty, this will be ignored.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio whose "data" object will contain a list of the instance IDs and filenames of the unloaded items.
         :raises APIError: If the plugin is not authenticated, or if this method is called within 3 seconds of a different call to the "NDIConfigRequest" endpoint.
@@ -972,7 +951,9 @@ class VTSClient:
                   smoothing: float = 0, censored: bool = False, flipped: bool = False, locked: bool = False,
                   unload_when_plugin_disconnects: bool = True, request_id: str = "") -> dict:
         """
-        This method will load an item into the scene. More information about the request can be found here: https://github.com/DenchiSoft/VTubeStudio#loading-item-into-the-scene
+        This method will load an item into the scene.
+        More information about the request can be found here: https://github.com/DenchiSoft/VTubeStudio#loading-item-into-the-scene
+
         :param file_name: The file name of the item to load. This can be found using the request_item_list() method.
         :param x_pos: The x position to load the item to. Valid values are between -1000 and 1000; check the documentation for more information about the coordinate system.
         :param y_pos: The y position to load the item to. Valid values are between -1000 and 1000; check the documentation for more information about the coordinate system.
@@ -987,7 +968,6 @@ class VTSClient:
         :param locked: Whether to lock the item.
         :param unload_when_plugin_disconnects: Garbage collection. If True, the item will be unloaded when the plugin disconnects.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio whose "data" object will contain the instance ID of the item.
         :raises APIError: If the plugin is not authenticated, if the input values are invalid, if no item with the
@@ -1027,7 +1007,6 @@ class VTSClient:
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio whose "data" object will contain a list of the instance IDs and filenames of the unloaded items.
         :raises APIError: If the plugin is not authenticated or if the user can't unload items, such as while in a config menu.
         """
@@ -1052,7 +1031,6 @@ class VTSClient:
         This method will unload all items from the scene that were loaded by your plugin. Note that this will not unload items loaded by other plugins.
 
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio whose "data" object will contain a list of the instance IDs and filenames of the unloaded items.
         :raises APIError: If the plugin is not authenticated or if the user can't unload items, such as while in a config menu.
@@ -1080,13 +1058,9 @@ class VTSClient:
         This method will unload specific items from the scene.
 
         :param allow_unloading_other_plugin_items: If this is set to true, the plugin will be allowed to unload items that were loaded by other plugins.
-
         :param item_ids: A list of item IDs to unload.
-
         :param file_names: A list of file names to unload.
-
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio whose "data" object will contain a list of the instance IDs and filenames of the unloaded items.
         :raises APIError: If the plugin is not authenticated or if the user can't unload items, such as while in a config menu.
@@ -1120,25 +1094,16 @@ class VTSClient:
         This method will control the animation of an item.
 
         :param item_instance_id: The instance ID of the item to control, which can be found in the response of the request_items_list() method.
-
         :param framerate: The framerate to set the item to. Valid values are only between 0.1 and 120.
-
         :param frame: The frame to set the item to. Valid values are only between 0 and the number of frames in the animation, which can be found in the response of the request_items_list() method.
-
         :param brightness: The brightness to set the item to. Valid values are between 0 and 1.
-
         :param opacity: The opacity to set the item to. Valid values are between 0 and 1.
-
         :param set_auto_stop_frames: Whether to allow setting specific frames for the animation to stop playing on. If this is False, the auto_stop_frames parameter will be ignored.
-
-        :param auto_stop_frames: A list of frames for the animation to stop playing on, with a maximum size of 1024. For this to take effect, set_auto_stop_frames must be set to True. Valid values are only between 0 and the number of frames in the animation, which can be found in the response of the request_items_list() method.
-
+        :param auto_stop_frames: A list of frames for the animation to stop playing on, with a maximum size of 1024. For this to take effect, set_auto_stop_frames must be set to True.
+                Valid values are only between 0 and the number of frames in the animation, which can be found in the response of the request_items_list() method.
         :param set_animation_play_state: Whether to allow setting the animation to play or pause. If this is False, the animation_play_state parameter will be ignored.
-
         :param animation_play_state: Whether to play (True) or pause (False) the animation. For this to take effect, set_animation_play_state must be set to True.
-
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio.
         :raises APIError: If the plugin is not authenticated, if no item with the given instance ID exists,
@@ -1180,7 +1145,6 @@ class VTSClient:
         :param items_to_move: A list of dictionaries containing information about the items to move.
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-
         :return: The response from VTubeStudio.
         :raises APIError: If the plugin is not authenticated, if the motion values are invalid, if there is no item loaded with one of the item instance IDs provided,
         if the item order was taken or if an item can't change order, such as while in a config menu.
@@ -1210,13 +1174,9 @@ class VTSClient:
         More information about this request can be found here: https://github.com/DenchiSoft/VTubeStudio#asking-user-to-select-artmeshes
 
         :param description: A description that is shown to the user in the dialogue box. If left empty, VTubeStudio will use a default description.
-
         :param help_text: Text that will be displayed to the user when they click the "?" button. If left empty, VTubeStudio will use default text.
-
         :param number_of_meshes_to_select: The number of meshes that the user should select. The user will not be able to proceed until they have selected the at least this many meshes.
-
         :param active_meshes: A list of mesh names that should already be active when the dialogue box opens for the user.
-
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
         :return: The response from VTubeStudio.
@@ -1253,14 +1213,10 @@ class VTSClient:
         so you will need to check the documentation for each event, located here: https://github.com/DenchiSoft/VTubeStudio/tree/master/Events
 
         :param event_name: The name of the event to subscribe to.
-
         :param on_message: The function to call when a message is received from the Event API.
             The function must accept a single parameter, which will be the message received.
-
         :param config: A dictionary of configuration options to pass to the event.
-
         :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
-
 
         :return: The response from VTubeStudio.
         :raises APIError: If the plugin is not authenticated, if there is no event with the name provided, or if the configuration options are invalid.
@@ -1309,11 +1265,11 @@ class VTSClient:
         """
         This method will unsubscribe from a specific event and close the thread listening for its messages.
 
-            :param event_name: The name of the event to unsubscribe from
-            :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
+        :param event_name: The name of the event to unsubscribe from
+        :param request_id: A unique ID to identify the request. If left blank, a default ID will be used (f"{plugin_name.replace(' ', '')}Request").
 
-            :return: The response from VTubeStudio
-            :raises APIError: If the plugin is not authenticated or if there is no event with the name provided.
+        :return: The response from VTubeStudio
+        :raises APIError: If the plugin is not authenticated or if there is no event with the name provided.
         """
         payload = {
             "apiName": "VTubeStudioPublicAPI",
