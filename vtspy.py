@@ -38,6 +38,7 @@ class VTSClient:
         self.plugin_name = plugin_name
         self.plugin_developer = plugin_developer
         self.plugin_logo = plugin_logo
+        self.default_request_id = f"{plugin_name.replace(' ', '')}Request"
         self.auth_token = self.get_token(f"TokenRequest")
         self.subscriptions = {"TestEvent": False, "ModelLoadedEvent": False, "TrackingStatusChangedEvent": False,
                               "BackgroundChangedEvent": False, "ModelConfigChangedEvent": False,
@@ -56,7 +57,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "AuthenticationTokenRequest",
             "data": {
                 "pluginName": self.plugin_name,
@@ -102,7 +103,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "APIStateRequest"
         }
 
@@ -124,7 +125,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "AuthenticationRequest",
             "data": {
                 "pluginName": self.plugin_name,
@@ -151,7 +152,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "StatisticsRequest"
         }
 
@@ -172,7 +173,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "VTSFolderInfoRequest"
         }
 
@@ -193,7 +194,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "CurrentModelRequest"
         }
 
@@ -214,7 +215,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "AvailableModelsRequest"
         }
 
@@ -236,7 +237,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ModelLoadRequest",
             "data": {
                 "modelID": model_id
@@ -248,7 +249,8 @@ class VTSClient:
         return response
 
     def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
-                           y_pos: float = None, rotation: float = None, size: float = None, request_id: str = "") -> dict:
+                           y_pos: float = None, rotation: float = None, size: float = None,
+                           request_id: str = "") -> dict:
         """This method will move, rotate and/or resize the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#moving-the-currently-loaded-vts-model
 
@@ -266,7 +268,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "MoveModelRequest",
             "data": {
                 "timeInSeconds": time_in_seconds,
@@ -295,7 +297,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "HotkeysInCurrentModelRequest"
         }
 
@@ -317,7 +319,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "HotkeysInCurrentModelRequest",
             "data": {
                 "modelID": model_id
@@ -330,11 +332,11 @@ class VTSClient:
 
     # Currently not working
     # Nothing is received but in the logs for VTube Studio it says that there was a NullReferenceException: Object reference not set to an instance of an object.
-    # def request_live2d_item_hotkeys(self, item_file_name, request_id: str = ""):
+    # def request_live2d_item_hotkeys(self, item_file_name, request_id: str = "):
     #     payload = {
     #         "apiName": "VTubeStudioPublicAPI",
     #         "apiVersion": "1.0",
-    #         "requestID": request_id,
+    #         "requestID": request_id if request_id != " else self.default_request_id,
     #         "messageType": "HotkeysInCurrentModelRequest",
     #         "data": {
     #             "live2DItemFileName": item_file_name
@@ -372,7 +374,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemListRequest",
             "data": {
                 "includeAvailableSpots": include_available_spots,
@@ -400,7 +402,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "HotkeyTriggerRequest",
             "data": {
                 "hotkeyID": hotkey_id
@@ -425,7 +427,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "HotkeyTriggerRequest",
             "data": {
                 "itemInstanceID": item_instance_id,
@@ -452,7 +454,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ExpressionStateRequest",
             "data": {
                 "details": give_details,
@@ -479,7 +481,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ExpressionActivationRequest",
             "data": {
                 "expressionFile": expression_file_name,
@@ -504,7 +506,8 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
+
             "messageType": "ArtMeshListRequest"
         }
 
@@ -513,10 +516,12 @@ class VTSClient:
         return response
 
     def tint_art_mesh(self,
-                      color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = None, rainbow: bool = False,
+                      color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = None,
+                      rainbow: bool = False,
                       mix_with_scene_lighting_color: float = None,
                       tint_all_meshes: bool = False, art_mesh_number: list[int] = None, exact_name: list[str] = None,
-                      name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None, request_id: str = "") -> dict:
+                      name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None,
+                      request_id: str = "") -> dict:
         """This method will tint the art mesh(es) specified by the parameters.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#tint-artmeshes-with-color
 
@@ -541,7 +546,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ColorTintRequest",
             "data": {
                 "colorTint": {
@@ -579,7 +584,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "SceneColorOverlayInfoRequest"
         }
 
@@ -599,7 +604,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "FaceFoundRequest"
         }
 
@@ -621,7 +626,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "InputParameterListRequest"
         }
 
@@ -644,7 +649,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ParameterValueRequest",
             "data": {
                 "name": parameter_name
@@ -668,7 +673,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "Live2DParameterListRequest"
         }
 
@@ -694,7 +699,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ParameterCreationRequest",
             "data": {
                 "parameterName": parameter_name,
@@ -723,7 +728,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ParameterDeletionRequest",
             "data": {
                 "parameterName": parameter_name
@@ -753,7 +758,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "InjectParameterDataRequest",
             "data": {
                 "mode": mode,
@@ -778,7 +783,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "GetCurrentModelPhysicsRequest"
         }
 
@@ -800,7 +805,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "SetCurrentModelPhysicsRequest",
             "data": {
                 "strengthOverrides": strength_overrides,
@@ -823,7 +828,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "NDIConfigRequest",
             "data": {
                 "setNewConfig": False
@@ -851,7 +856,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "NDIConfigRequest",
             "data": {
                 "setNewConfig": True,
@@ -895,7 +900,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemLoadRequest",
             "data": {
                 "fileName": file_name,
@@ -930,7 +935,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemUnloadRequest",
             "data": {
                 "unloadAllInScene": True
@@ -953,7 +958,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemUnloadRequest",
             "data": {
                 "unloadAllInScene": False,
@@ -984,7 +989,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemUnloadRequest",
             "data": {
                 "unloadAllInScene": False,
@@ -1037,7 +1042,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemAnimationControlRequest",
             "data": {
                 "itemInstanceID": item_instance_id,
@@ -1072,7 +1077,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ItemMoveRequest",
             "data": {
                 "itemsToMove": items_to_move
@@ -1110,7 +1115,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "ArtMeshSelectionRequest",
             "data": {
                 "textOverride": description,
@@ -1150,7 +1155,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "EventSubscriptionRequest",
             "data": {
                 "eventName": event_name,
@@ -1197,7 +1202,7 @@ class VTSClient:
         payload = {
             "apiName": "VTubeStudioPublicAPI",
             "apiVersion": "1.0",
-            "requestID": request_id,
+            "requestID": request_id if request_id != "" else self.default_request_id,
             "messageType": "EventSubscriptionRequest",
             "data": {
                 "eventName": event_name,
