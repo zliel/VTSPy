@@ -43,9 +43,9 @@ class VTSClient:
         self.plugin_logo = plugin_logo
         self.default_request_id = f"{plugin_name.replace(' ', '')}Request"
         self.auth_token = self.get_token(f"TokenRequest")
-        self.subscriptions = {"TestEvent": False, "ModelLoadedEvent": False, "TrackingStatusChangedEvent": False,
-                              "BackgroundChangedEvent": False, "ModelConfigChangedEvent": False,
-                              "ModelMovedEvent": False, "ModelOutlineEvent": False}
+        self._subscriptions = {"TestEvent": False, "ModelLoadedEvent": False, "TrackingStatusChangedEvent": False,
+                               "BackgroundChangedEvent": False, "ModelConfigChangedEvent": False,
+                               "ModelMovedEvent": False, "ModelOutlineEvent": False}
 
     def get_token(self, request_id: str = ""):
         """
@@ -268,8 +268,8 @@ class VTSClient:
         return response
 
     def move_model(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
-                           y_pos: float = None, rotation: float = None, size: float = None,
-                           request_id: str = "") -> dict:
+                   y_pos: float = None, rotation: float = None, size: float = None,
+                   request_id: str = "") -> dict:
         """
         This method will move, rotate and/or resize the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#moving-the-currently-loaded-vts-model
@@ -377,12 +377,12 @@ class VTSClient:
     #     return response
 
     def get_items_list(self,
-                           include_available_spots: bool = False,
-                           include_item_instances_in_scene: bool = False,
-                           include_available_item_files: bool = False,
-                           only_items_with_file_name: str = "",
-                           only_items_with_instance_id: str = "",
-                           request_id: str = "") -> dict:
+                       include_available_spots: bool = False,
+                       include_item_instances_in_scene: bool = False,
+                       include_available_item_files: bool = False,
+                       only_items_with_file_name: str = "",
+                       only_items_with_instance_id: str = "",
+                       request_id: str = "") -> dict:
         """
         This method will return a list of items, depending on the parameters set.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-available-items-or-items-in-scene
@@ -475,7 +475,7 @@ class VTSClient:
         return response
 
     def get_expression_state(self, give_details: bool = False, expression_file_name: str = "",
-                                 request_id: str = "") -> dict:
+                             request_id: str = "") -> dict:
         """
         This method will return either the current state of a specified expression or the current state of all expressions.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-current-expression-state-list
@@ -1167,8 +1167,8 @@ class VTSClient:
         return response
 
     def get_art_mesh_selection(self, description: str = "", help_text: str = "",
-                                   number_of_meshes_to_select: int = 1, active_meshes: list[str] = None,
-                                   request_id: str = "") -> dict:
+                               number_of_meshes_to_select: int = 1, active_meshes: list[str] = None,
+                               request_id: str = "") -> dict:
         """
         This method will present a dialogue box to the user to select meshes.
         More information about this request can be found here: https://github.com/DenchiSoft/VTubeStudio#asking-user-to-select-artmeshes
@@ -1242,12 +1242,12 @@ class VTSClient:
         if response["messageType"] == "APIError":
             raise APIError(response["data"]["message"], response["data"]["errorID"])
 
-        # Using the self.subscriptions dictionary to store the events the plugin is subscribed to
-        self.subscriptions[event_name] = True
+        # Using the self._subscriptions dictionary to store the events the plugin is subscribed to
+        self._subscriptions[event_name] = True
 
-        # Upon subscribing to an event, the self.subscriptions dictionary will be updated and a thread will be started to listen for messages
+        # Upon subscribing to an event, the self._subscriptions dictionary will be updated and a thread will be started to listen for messages
         def listener():
-            while self.subscriptions[event_name] is True:
+            while self._subscriptions[event_name] is True:
                 message = self.instance.recv()
                 on_message(json.loads(message))
 
@@ -1287,5 +1287,6 @@ class VTSClient:
         if response["messageType"] == "APIError":
             raise APIError(response["data"]["message"], response["data"]["errorID"])
 
-        self.subscriptions[event_name] = False
+        # Using the self._subscriptions dictionary to store the events the plugin is subscribed to
+        self._subscriptions[event_name] = False
         return response
