@@ -3,7 +3,7 @@ import json
 import threading
 import time
 
-from errors import APIError
+from .errors import APIError
 
 
 # noinspection GrazieInspection
