@@ -148,7 +148,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_stats(self, request_id: str = "") -> dict:
+    def get_stats(self, request_id: str = "") -> dict:
         """
         This method will return statistics about the current VTubeStudio session (things like uptime, framerate, number of plugins, resolution, etc.).
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-current-vts-statistics
@@ -171,7 +171,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_folder_info(self, request_id: str = "") -> dict:
+    def get_folder_info(self, request_id: str = "") -> dict:
         """
         This method will return the names of the folders in the VTubeStudio "StreamingAssets" folder.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-list-of-vts-folders
@@ -194,7 +194,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_current_model(self, request_id: str = "") -> dict:
+    def get_current_model_info(self, request_id: str = "") -> dict:
         """
         This method will return information about the current model from VTubeStudio.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-the-currently-loaded-model
@@ -217,7 +217,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_available_models(self, request_id: str = "") -> dict:
+    def get_available_models(self, request_id: str = "") -> dict:
         """
         This method will return a list of all available models from VTubeStudio.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-a-list-of-available-vts-models
@@ -267,7 +267,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def move_model_request(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
+    def move_model(self, time_in_seconds: float, values_are_relative_to_model: bool, x_pos: float = None,
                            y_pos: float = None, rotation: float = None, size: float = None,
                            request_id: str = "") -> dict:
         """
@@ -306,7 +306,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_current_model_hotkeys(self, request_id: str = "") -> dict:
+    def get_current_model_hotkeys(self, request_id: str = "") -> dict:
         """
         This method will return the current model's hotkeys
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-hotkeys-available-in-current-or-other-vts-model
@@ -329,7 +329,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_model_hotkeys_by_id(self, model_id: str, request_id: str = "") -> dict:
+    def get_model_hotkeys_by_id(self, model_id: str, request_id: str = "") -> dict:
         """
         This method will return the hotkeys of the model with the given modelID.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-hotkeys-available-in-current-or-other-vts-model
@@ -358,7 +358,7 @@ class VTSClient:
 
     # Currently not working
     # Nothing is received but in the logs for VTube Studio it says that there was a NullReferenceException: Object reference not set to an instance of an object.
-    # def request_live2d_item_hotkeys(self, item_file_name, request_id: str = "):
+    # def get_live2d_item_hotkeys(self, item_file_name, request_id: str = "):
     #     payload = {
     #         "apiName": "VTubeStudioPublicAPI",
     #         "apiVersion": "1.0",
@@ -376,7 +376,7 @@ class VTSClient:
     #     print(response)
     #     return response
 
-    def request_items_list(self,
+    def get_items_list(self,
                            include_available_spots: bool = False,
                            include_item_instances_in_scene: bool = False,
                            include_available_item_files: bool = False,
@@ -474,7 +474,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_expression_state(self, give_details: bool = False, expression_file_name: str = "",
+    def get_expression_state(self, give_details: bool = False, expression_file_name: str = "",
                                  request_id: str = "") -> dict:
         """
         This method will return either the current state of a specified expression or the current state of all expressions.
@@ -533,7 +533,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_art_mesh_list(self, request_id: str = "") -> dict:
+    def get_art_mesh_list(self, request_id: str = "") -> dict:
         """
         This method will return a list of all art meshes in the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-artmeshes-in-current-model
@@ -617,7 +617,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_scene_color_overlay_info(self, request_id: str = "") -> dict:
+    def get_scene_color_overlay_info(self, request_id: str = "") -> dict:
         """
         This method will return information about the scene lighting overlay color, which overlays the user's model with
         the average color captured from a screen or window. More information can be found here: https://github.com/DenchiSoft/VTubeStudio#getting-scene-lighting-overlay-color
@@ -640,7 +640,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_is_face_found(self, request_id: str = "") -> dict:
+    def is_face_found(self, request_id: str = "") -> dict:
         """
         This method will return a boolean value indicating whether or not the face is currently being tracked.
         More information on the face tracking system can be found here: https://github.com/DenchiSoft/VTubeStudio#checking-if-face-is-currently-found-by-tracker
@@ -663,7 +663,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_input_parameters(self, request_id: str = "") -> dict:
+    def get_input_parameters(self, request_id: str = "") -> dict:
         """
         This method will return lists of all input parameters that are currently available in VTubeStudio, both custom and default.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#requesting-list-of-available-tracking-parameters
@@ -686,7 +686,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_parameter_value(self, parameter_name: str, request_id: str = "") -> dict:
+    def get_parameter_value(self, parameter_name: str, request_id: str = "") -> dict:
         """
         This method retrieves the value of a specific default or custom parameter.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-the-value-for-one-specific-parameter-default-or-custom.
@@ -713,7 +713,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_all_parameter_values(self, request_id: str = "") -> dict:
+    def get_all_parameter_values(self, request_id: str = "") -> dict:
         """
         This method retrieves all Live2D parameter values for the current model.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#get-the-value-for-all-live2d-parameters-in-the-current-model
@@ -1166,7 +1166,7 @@ class VTSClient:
             raise APIError(response["data"]["message"], response["data"]["errorID"])
         return response
 
-    def request_art_mesh_selection(self, description: str = "", help_text: str = "",
+    def get_art_mesh_selection(self, description: str = "", help_text: str = "",
                                    number_of_meshes_to_select: int = 1, active_meshes: list[str] = None,
                                    request_id: str = "") -> dict:
         """
