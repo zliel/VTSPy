@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vtspy"
+version = "1.0.0"
+description = "A Python client for interacting with the VTube Studio API."
+authors = [{name = "Persona Name", email = "persona@email.com"}]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = ["websocket-client"]
+
+[project.urls]
+homepage = "https://github.com/zliel/VTSPy"
