@@ -3,7 +3,7 @@ import json
 import threading
 import time
 
-from .errors import APIError
+from errors import APIError
 
 
 # noinspection GrazieInspection
@@ -558,14 +558,14 @@ class VTSClient:
         return response
 
     def tint_art_mesh(self,
-                      color_r: int = None, color_g: int = None, color_b: int = None, color_a: int = None,
+                      color_r: int = 255, color_g: int = 255, color_b: int = 255, color_a: int = 255,
                       rainbow: bool = False,
                       mix_with_scene_lighting_color: float = None,
                       tint_all_meshes: bool = False, art_mesh_number: list[int] = None, exact_name: list[str] = None,
                       name_contains: list[str] = None, exact_tag: list[str] = None, tag_contains: list[str] = None,
                       request_id: str = "") -> dict:
         """
-        This method will tint the art mesh(es) specified by the parameters.
+        This method will tint the art mesh(es) specified by the parameters. Note that if no color values are passed in, the colors will default to 255, resetting the color.
         More information can be found here: https://github.com/DenchiSoft/VTubeStudio#tint-artmeshes-with-color
 
         :param color_r: The red value of the color to tint the art mesh(es) with. Should be between 0 and 255.
