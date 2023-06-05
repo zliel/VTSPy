@@ -1,4 +1,4 @@
-from websocket import create_connection
+from websockets.sync.client import connect
 import json
 import threading
 import time
@@ -37,7 +37,7 @@ class VTSClient:
         :param plugin_developer: The name of the developer of the plugin.
         :param plugin_logo: The base64-encoded logo of the plugin. This will be displayed in VTubeStudio's plugin list.
         """
-        self.instance = create_connection("ws://localhost:8001")
+        self.instance = connect("ws://localhost:8001")
         self.plugin_name = plugin_name
         self.plugin_developer = plugin_developer
         self.plugin_logo = plugin_logo
