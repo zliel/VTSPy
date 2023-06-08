@@ -3,7 +3,7 @@ import json
 import threading
 import time
 
-from errors import APIError
+from vtspy import APIError
 
 
 # noinspection GrazieInspection
@@ -13,7 +13,7 @@ class VTSClient:
 
     This class provides a convenient interface for sending requests to the and
     handling responses from the API. It also provides a simple way to subscribe to events
-    and handle them in a separate thread. For more in-depth information about the API, see the
+    and handle them in a se   parate thread. For more in-depth information about the API, see the
     official documentation at https://github.com/DenchiSoft/VTubeStudio
 
     Example:
@@ -1290,3 +1290,6 @@ class VTSClient:
         # Using the self._subscriptions dictionary to store the events the plugin is subscribed to
         self._subscriptions[event_name] = False
         return response
+
+if __name__ == '__main__':
+    client = VTSClient("VTubeStudioPublicAPI", "1.0")
